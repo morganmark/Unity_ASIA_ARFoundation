@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARSubsystems;
 using System.Collections.Generic;
 
 //RC 要求元件 > 在第一次套用腳本執行
@@ -27,6 +28,15 @@ public class ARManager : MonoBehaviour
         {
             pointMouse = Input.mousePosition;
             print(pointMouse);
+
+            //判斷打物件
+            if(arManager.Raycast(pointMouse, hits, TrackableType.PlaneWithinPolygon))
+            {
+                //生成物件(物件, 座標, 角度)
+                //hit[0].pose.position 點擊到地面第一個地方
+                //Quaternion.identity 零角度
+                Instantiate(obj, hits[0].pose.position, Quaternion.identity);
+            }
         }
     }
 
